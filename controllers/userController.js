@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const {JWT_SECRET} = require('../config/configuration');
+
 module.exports = {
     signUp: async (req, res, next) => {
 
@@ -11,7 +14,12 @@ module.exports = {
         }
         const newUser = new User({email, password});
         await newUser.save();
-        res.json({user: 'created'});
+        //res.json({user: 'created'});
+
+
+        res.json({
+           token: signToken(newUser)
+        })
     },
     signIn: async (req, res, next) => {
         console.log('UserController.signIn() called');
@@ -19,4 +27,13 @@ module.exports = {
     secret: async (req, res, next) => {
         console.log('UserController.secret() called');
     }
+};
+
+signToken = user=>{
+  return   jwt.sign({
+        iss: 'TutexpSoft',
+        sub: user._id,
+        iat : new Date().getTime(),
+        exp : new Date().setDate(new Date().getDate() + 1)
+    }, JWT_SECRET);
 };
