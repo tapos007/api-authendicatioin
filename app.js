@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/APIAuthendication');
 const app = express();
 
 
