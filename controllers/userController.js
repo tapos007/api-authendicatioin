@@ -22,10 +22,16 @@ module.exports = {
         })
     },
     signIn: async (req, res, next) => {
-        console.log('UserController.signIn() called');
+        res.json({
+            token: signToken(req.user)
+        });
     },
     secret: async (req, res, next) => {
         console.log('UserController.secret() called');
+        res.json({
+            secret: "resources",
+            user:req.user
+        });
     }
 };
 
