@@ -21,4 +21,16 @@ app.use(morgan('dev'));
 // added app router here
 
 app.use('/users', require('./routes/userRoute'));
+
+app.use((err, req, res, next) => {
+    var output = {
+        error: {
+            name: err.name,
+            message: err.message,
+            text: err.toString()
+        }
+    };
+    var statusCode = err.status || 500;
+    res.status(statusCode).json(output);
+});
 app.listen(3000, () => console.log('Example app listening on port 3000!'));

@@ -34,14 +34,15 @@ passport.use(new LocalStrategy({
         try {
             const user = await User.findOne({email});
             if (!user) {
-                return done(null, false);
+                return done(null, false,{ message: 'Incorrect username.' });
             }
             const isMatch = await  user.isValidPassword(password);
             if (!isMatch) {
-                return done(null, false);
+                return done(null, false,{ message: 'Incorrect password.' });
             }
             done(null, user);
         } catch (err) {
+            console.log(err);
             return done(err, false)
         }
 

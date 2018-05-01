@@ -8,7 +8,7 @@ const UserController = require('../controllers/userController');
 
 // define the home page route
 router.post('/signup', validateBody(schemas.authSchema), UserController.signUp);
-router.post('/signin', validateBody(schemas.authSchema),passport.authenticate('local', {session: false}),UserController.signIn);
+router.post('/signin', validateBody(schemas.authSchema),passport.authenticate('local', {session: false,  failWithError: true }),UserController.signIn);
 router.get('/secret', passport.authenticate('jwt',{session: false}),UserController.secret);
 
 
